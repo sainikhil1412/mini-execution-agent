@@ -1,0 +1,85 @@
+{
+  "execution_id" : "exec-20250228-002",
+  "version" : "1.0",
+  "status" : "COMPLETED",
+  "dry_run" : false,
+  "executed_at" : "2026-02-28T13:32:50.722742300",
+  "instruction" : "Increase prices by 10% for all in-stock fitness products.",
+  "filters" : [ {
+    "field" : "category",
+    "operator" : "EQUALS",
+    "value" : "fitness"
+  }, {
+    "field" : "in_stock",
+    "operator" : "EQUALS",
+    "value" : "true"
+  } ],
+  "action" : {
+    "type" : "PRICE_ADJUSTMENT",
+    "adjustmentMode" : "PERCENTAGE",
+    "value" : 10.0,
+    "direction" : "INCREASE",
+    "decimalPlaces" : 2
+  },
+  "summary" : "2 product(s) updated. 5 product(s) skipped (did not match filters). Net price change: 7.00. Action: INCREASE 10.0%.",
+  "total_changed" : 2,
+  "total_skipped" : 5,
+  "changes" : [ {
+    "sku" : "A101",
+    "field" : "price",
+    "before" : 29.99,
+    "after" : 32.99,
+    "actionApplied" : "INCREASE_10_PERCENTAGE",
+    "status" : "CHANGED",
+    "skipReason" : null
+  }, {
+    "sku" : "A102",
+    "field" : "price",
+    "before" : 39.99,
+    "after" : 43.99,
+    "actionApplied" : "INCREASE_10_PERCENTAGE",
+    "status" : "CHANGED",
+    "skipReason" : null
+  } ],
+  "skipped" : [ {
+    "sku" : "A103",
+    "field" : "price",
+    "before" : 49.99,
+    "after" : 49.99,
+    "actionApplied" : null,
+    "status" : "SKIPPED",
+    "skipReason" : "Did not match all filters"
+  }, {
+    "sku" : "B201",
+    "field" : "price",
+    "before" : 19.99,
+    "after" : 19.99,
+    "actionApplied" : null,
+    "status" : "SKIPPED",
+    "skipReason" : "Did not match all filters"
+  }, {
+    "sku" : "B202",
+    "field" : "price",
+    "before" : 24.99,
+    "after" : 24.99,
+    "actionApplied" : null,
+    "status" : "SKIPPED",
+    "skipReason" : "Did not match all filters"
+  }, {
+    "sku" : "C301",
+    "field" : "price",
+    "before" : 9.99,
+    "after" : 9.99,
+    "actionApplied" : null,
+    "status" : "SKIPPED",
+    "skipReason" : "Did not match all filters"
+  }, {
+    "sku" : "C302",
+    "field" : "price",
+    "before" : 14.99,
+    "after" : 14.99,
+    "actionApplied" : null,
+    "status" : "SKIPPED",
+    "skipReason" : "Did not match all filters"
+  } ]
+}

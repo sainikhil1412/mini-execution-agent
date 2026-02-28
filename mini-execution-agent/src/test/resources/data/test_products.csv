@@ -1,0 +1,7 @@
+sku,category,price,in_stock
+TEST001,fitness,29.99,true
+TEST002,fitness,39.99,true
+TEST003,fitness,49.99,false
+TEST004,yoga,19.99,true
+TEST005,yoga,24.99,false
+TEST006,accessories,9.99,true

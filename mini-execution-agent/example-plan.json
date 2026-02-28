@@ -1,0 +1,27 @@
+{
+  "executionId": "exec-20250228-001",
+  "version": "1.0",
+  "instruction": "Increase prices by 10% for all in-stock fitness products. Do not change prices for out-of-stock items. Generate a summary explaining what changed.",
+  "createdAt": "2025-02-28T10:00:00",
+  "filters": [
+    {
+      "field": "category",
+      "operator": "EQUALS",
+      "value": "fitness"
+    },
+    {
+      "field": "in_stock",
+      "operator": "EQUALS",
+      "value": "true"
+    }
+  ],
+  "action": {
+    "type": "PRICE_ADJUSTMENT",
+    "adjustmentMode": "PERCENTAGE",
+    "value": 10.0,
+    "direction": "INCREASE",
+    "decimalPlaces": 2
+  },
+  "summaryRequired": true,
+  "dryRun": false
+}

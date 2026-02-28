@@ -1,0 +1,81 @@
+[
+  {
+    "_comment": "Scenario 2: Discount all yoga products by 15%",
+    "executionId": "exec-20250228-002",
+    "version": "1.0",
+    "instruction": "Decrease prices by 15% for all yoga products.",
+    "createdAt": "2025-02-28T11:00:00",
+    "filters": [
+      {
+        "field": "category",
+        "operator": "EQUALS",
+        "value": "yoga"
+      }
+    ],
+    "action": {
+      "type": "PRICE_ADJUSTMENT",
+      "adjustmentMode": "PERCENTAGE",
+      "value": 15.0,
+      "direction": "DECREASE",
+      "decimalPlaces": 2
+    },
+    "summaryRequired": true,
+    "dryRun": false
+  },
+  {
+    "_comment": "Scenario 3: Flat Rs.5 increase on all accessories under Rs.12",
+    "executionId": "exec-20250228-003",
+    "version": "1.0",
+    "instruction": "Increase price by 5 flat for all accessories priced below 12.",
+    "createdAt": "2025-02-28T12:00:00",
+    "filters": [
+      {
+        "field": "category",
+        "operator": "EQUALS",
+        "value": "accessories"
+      },
+      {
+        "field": "price",
+        "operator": "LT",
+        "value": "12"
+      }
+    ],
+    "action": {
+      "type": "PRICE_ADJUSTMENT",
+      "adjustmentMode": "FLAT",
+      "value": 5.0,
+      "direction": "INCREASE",
+      "decimalPlaces": 2
+    },
+    "summaryRequired": true,
+    "dryRun": false
+  },
+  {
+    "_comment": "Scenario 4: Dry-run — preview 20% increase on out-of-stock fitness items",
+    "executionId": "exec-20250228-004",
+    "version": "1.0",
+    "instruction": "Preview a 20% price increase on out-of-stock fitness items. Do not apply changes.",
+    "createdAt": "2025-02-28T13:00:00",
+    "filters": [
+      {
+        "field": "category",
+        "operator": "EQUALS",
+        "value": "fitness"
+      },
+      {
+        "field": "in_stock",
+        "operator": "EQUALS",
+        "value": "false"
+      }
+    ],
+    "action": {
+      "type": "PRICE_ADJUSTMENT",
+      "adjustmentMode": "PERCENTAGE",
+      "value": 20.0,
+      "direction": "INCREASE",
+      "decimalPlaces": 2
+    },
+    "summaryRequired": true,
+    "dryRun": true
+  }
+]

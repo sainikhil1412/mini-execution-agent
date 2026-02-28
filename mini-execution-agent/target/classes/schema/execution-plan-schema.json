@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecutionPlan",
+  "description": "Schema for the Mini Execution Agent plan. Supports multiple pricing scenarios without changing executor logic.",
+  "type": "object",
+  "required": ["executionId", "version", "instruction", "createdAt", "filters", "action"],
+  "properties": {
+    "executionId": {
+      "type": "string",
+      "description": "Unique ID for this execution. Used for idempotency — re-running same ID is a no-op.",
+      "example": "exec-20250228-001"
+    },
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "Schema version."
+    },
+    "instruction": {
+      "type": "string",
+      "description": "The original natural-language instruction. Stored for audit purposes only."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO timestamp when this plan was created."
+    },
+    "filters": {
+      "type": "array",
+      "minItems": 1,
+      "description": "All filters are ANDed together. Only rows matching ALL filters are affected.",
+      "items": {
+        "type": "object",
+        "required": ["field", "operator", "value"],
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": ["sku", "category", "price", "in_stock"],
+            "description": "CSV column to filter on."
+          },
+          "operator": {
+            "type": "string",
+            "enum": ["EQUALS", "NOT_EQUALS", "GT", "LT", "GTE", "LTE"],
+            "description": "Comparison operator."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value to compare against. Always a string; cast internally for numeric comparisons."
+          }
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "required": ["type", "adjustmentMode", "value", "direction", "decimalPlaces"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["PRICE_ADJUSTMENT"],
+          "description": "Type of action to perform. Extensible for future action types."
+        },
+        "adjustmentMode": {
+          "type": "string",
+          "enum": ["PERCENTAGE", "FLAT"],
+          "description": "Whether value is a % or a flat amount."
+        },
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true,
+          "description": "The adjustment amount."
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["INCREASE", "DECREASE"],
+          "description": "Whether to increase or decrease the price."
+        },
+        "decimalPlaces": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 2,
+          "description": "Number of decimal places to round to."
+        }
+      }
+    },
+    "summaryRequired": {
+      "type": "boolean",
+      "default": true,
+      "description": "If true, a human-readable summary is included in the result."
+    },
+    "dryRun": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, simulate execution without writing any changes to CSV."
+    }
+  }
+}

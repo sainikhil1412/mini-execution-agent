@@ -1,0 +1,59 @@
+# Prompts Used During Development
+
+Current task is to create a mini agent 1)planner 2) executor.
+1) planner should take human natural language as input , call llm , create json which will be passed to exeuctor.
+
+2) executor should take json and execute the given changes for example making price increase of some rows of csv
+
+planner and executor should be independednt
+
+Create a Planner controller which will take String as an argument
+this argument needs to passed to planner service which takes the string i.e human natural language
+and calls LLM agent and to get resposne.
+
+This is just a proptoype so mimick LLM .
+
+use a detailed template to for prompt to call LLM . I want LLM to return me a Json which will be a DTO containing
+relevant information needed to execute changes on csv.
+
+validate llm returned json . if llm connectain fails or validation fails use exponential backedoff retries.
+include max 3 retries.
+
+implement idempotency using executionId as idemp key , this is a prototype so store in in-process hashmap.
+
+
+is the current @file:ExecutionPlan.java  and @file:PlanValidator.java  extensible for
+ different types of instructions and modifications in future? Make it extensible for future. use interface so that I can have many implementations in future. In future not everything would just increase or decrease in price
+
+
+@file:PriceAdjustmentActionValidator.java the method supports() , isntead of checking instanceof , can't just check if action.getType() belongs to list of supported actions?
+
+in @file:PlannerController.java  write one more method which will take natural language human input and call LLM inorder to get Json which will be passed on to validatePlan in @file:PlannerController.java .
+Mimick the LLM call . no need to actual call LLM.
+Include a prompt template with supported actions and rules and the expected correct format of json. so that LLM produces correct valid json
+
+@file:PlannerController.java controller is too populated and voilating single responsibility principle . move prompt template to a seperate constant class.
+move the service logic to seperate service class
+
+for @file:IdempotencyService.java just use a HashMap or set , that should be sufficient since this is a prototype
+
+implement exponential back off retries of mockLlmGeneratePlanJson incase LLM response fails.
+after geting rawJson from LLM call plannerService.parsePlanAndValidate(rawJson); . if validation fails retry LLM call. this time include failure error reason also to LLM. try max 3 times
+
+
+explain what @file:ExecutorService.java  execute() method is doing? I wan't it to preserve original csv as it is and create a new csv and execute actions on that. save that csv and return the new csv name and path.
+I also want execute() method to be Atomic
+
+include swagger if not already present. I want to test the endpoitns through sswagger. Give me sample input for each endpoint so that i can test through swagger
+
+since I am directly accepting @PlannerController.java#L77 Executionplan type as argument.
+
+Can i directly invoke only @PlanValidator.java#L24  instead of@PlannerService.java#L67-102 which checks lots of types
+
+
+review my entire project.
+
+
+review it and check if I am following best practices
+am I following SOLID principles?
+suggest me if any changes are rquired?
