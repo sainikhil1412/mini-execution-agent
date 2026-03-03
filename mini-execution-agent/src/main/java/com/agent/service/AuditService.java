@@ -44,23 +44,23 @@ public class AuditService {
         String filename = OUTPUT_DIR + "audit_" + plan.getExecutionId() + ".json";
         log.debug("Writing audit log for executionId: {} to file: {}", plan.getExecutionId(), filename);
 
-        Map<String, Object> log = new LinkedHashMap<>();
-        log.put("execution_id",  plan.getExecutionId());
-        log.put("version",       plan.getVersion());
-        log.put("status",        status);
-        log.put("dry_run",       plan.isDryRun());
-        log.put("executed_at",   LocalDateTime.now().toString());
-        log.put("instruction",   plan.getInstruction());
-        log.put("filters",       plan.getFilters());
-        log.put("action",        plan.getAction());
-        log.put("summary",       summary);
-        log.put("total_changed", changes.size());
-        log.put("total_skipped", skipped.size());
-        log.put("changes",       changes);
-        log.put("skipped",       skipped);
+        Map<String, Object> auditLog = new LinkedHashMap<>();
+        auditLog.put("execution_id",  plan.getExecutionId());
+        auditLog.put("version",       plan.getVersion());
+        auditLog.put("status",        status);
+        auditLog.put("dry_run",       plan.isDryRun());
+        auditLog.put("executed_at",   LocalDateTime.now().toString());
+        auditLog.put("instruction",   plan.getInstruction());
+        auditLog.put("filters",       plan.getFilters());
+        auditLog.put("action",        plan.getAction());
+        auditLog.put("summary",       summary);
+        auditLog.put("total_changed", changes.size());
+        auditLog.put("total_skipped", skipped.size());
+        auditLog.put("changes",       changes);
+        auditLog.put("skipped",       skipped);
 
         try {
-            mapper.writeValue(new File(filename), log);
+            mapper.writeValue(new File(filename), auditLog);
             log.info("Successfully wrote audit log for executionId: {} with {} changes, {} skipped", 
                     plan.getExecutionId(), changes.size(), skipped.size());
         } catch (IOException e) {
